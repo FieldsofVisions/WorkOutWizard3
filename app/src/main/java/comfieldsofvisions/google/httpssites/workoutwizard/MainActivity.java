@@ -7,9 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +23,17 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final int result = 1;
+
                 Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-                startActivityForResult(intent,0);
+
+                intent.putExtra("callingActivity", "MainActivity");
+                startActivityForResult(intent,result);
             }
         });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,4 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        TextView textView = (TextView)findViewById(R.id.previous_work_out_text);
+        String nameSentBack = data.getStringExtra("UserName");
+        textView.setText(nameSentBack);
+
+
+        }
+    }
+
